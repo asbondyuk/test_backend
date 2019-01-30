@@ -1,0 +1,28 @@
+<?php
+
+/*
+$did1 = new DistributorItemDesignation;
+$did1 -> setDistributorItemDesignation('одиннадцать');
+echo $did1->getDistributorItemDesignation();
+
+$did2 = new DistributorItemDesignation;
+$did2 -> setDistributorItemDesignation('двадцать два');
+echo $did2->getDistributorItemDesignation();
+*/
+
+//Обозначение товара дистрибьютором
+class DistributorItemDesignation extends Item
+{
+    private $distributorItemDesignation;
+
+    public function getDistributorItemDesignation()
+    {
+        return $this->distributorItemDesignation;
+    }
+
+    public function setDistributorItemDesignation($distributorItemDesignation)
+    {
+        $this->distributorItemDesignation = $distributorItemDesignation;
+    }
+
+}
