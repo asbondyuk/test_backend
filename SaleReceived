@@ -1,0 +1,536 @@
+<?php
+
+/*
+
+class Distributor
+{
+    private $name;
+
+    public function getName()
+    {
+        return $this->name;
+    }
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function downloadSales($file, DistributorSalesHandler $distributorSalesHandler){
+        $distributorSalesHandler -> getDistributor($this->getName());
+        $distributorSalesHandler -> createSalesReceive($file);
+    }
+}
+
+$d1 = new Distributor;
+$d1 ->setName('д1');
+echo $d1 ->getName();
+
+$d2 = new Distributor;
+$d2 ->setName('д2');
+echo $d2 ->getName();
+
+
+
+
+class Item
+{
+    private $item;
+
+    public function getItem()
+    {
+        return $this->item;
+    }
+
+    public function setItem($item)
+    {
+        $this->item = $item;
+    }
+}
+$i1 = new Item;
+$i1 -> setItem('11');
+echo $i1->getItem();
+
+$i2 = new Item;
+$i2 -> setItem('22');
+echo $i2->getItem();
+
+
+
+class DistributorItemDesignation extends Item
+{
+    private $distributorItemDesignation;
+
+    public function getDistributorItemDesignation()
+    {
+        return $this->distributorItemDesignation;
+    }
+
+    public function setDistributorItemDesignation($distributorItemDesignation)
+    {
+        $this->distributorItemDesignation = $distributorItemDesignation;
+    }
+
+}
+$did1 = new DistributorItemDesignation;
+$did1 -> setDistributorItemDesignation('одиннадцать');
+echo $did1->getDistributorItemDesignation();
+
+$did2 = new DistributorItemDesignation;
+$did2 -> setDistributorItemDesignation('двадцать два');
+echo $did2->getDistributorItemDesignation();
+
+
+
+class ListItemDesignation
+{
+    private $relations = Array();
+
+    //добавление новой привязки обозначения дистр-ра к товару Renewal
+    public function addRelation (DistributorItemDesignation $distributorItemDesignation, Item $item){
+        $key = $distributorItemDesignation -> getDistributorItemDesignation();
+        $value = $item;
+
+        $this->relations += [$key => $value];
+    }
+
+    //проверка наличия обозначения дистрибьютора среди привязок к товару Renewal
+    public function validationDesignation (DistributorItemDesignation $distributorItemDesignation){
+        $itemDesignation = $distributorItemDesignation -> getDistributorItemDesignation();
+        return isset($this->relations[$itemDesignation]);
+    }
+
+    //получение названия товара Renewal на основе обозначчения дистрибьютора
+    public function redefineDesignation (DistributorItemDesignation $distributorItemDesignation){
+        try {
+            if ($this->relations [$distributorItemDesignation -> getDistributorItemDesignation()])
+            {return $this->relations [$distributorItemDesignation-> getDistributorItemDesignation()];}
+            else
+            {throw new Exception('Обозначение товара дистрибьютора не определено');}
+        }
+        catch (Exception $ex){
+            echo $ex ->getMessage();
+        }
+    }
+}
+
+$li= new ListItemDesignation;
+$li ->addRelation($did1, $i1);
+$li ->addRelation($did2, $i2);
+
+echo $li->validationDesignation($did2);
+echo ($li->redefineDesignation($did2))->getItem();
+
+
+
+class PharmacyDesignation
+{
+    private $pharmacyDesignation;
+
+    public function getPharmacyDesignation()
+    {
+        return $this->pharmacyDesignation;
+    }
+
+    public function setPharmacyDesignation($pharmacyDesignation)
+    {
+        $this->pharmacyDesignation = $pharmacyDesignation;
+    }
+}
+$p1 = new PharmacyDesignation;
+$p1 -> setPharmacyDesignation('Новосибирск, Красный проспект 1');
+echo $p1->getPharmacyDesignation();
+
+$p2 = new PharmacyDesignation;
+$p2 -> setPharmacyDesignation('Новосибирск, Ленина 1');
+echo $p2->getPharmacyDesignation();
+
+
+
+class DistributorPharmacyDesignation extends PharmacyDesignation
+{
+    private $distributorPharmacyDesignation;
+
+    public function getDistributorPharmacyDesignation()
+    {
+        return $this->distributorPharmacyDesignation;
+    }
+
+    public function setDistributorPharmacyDesignation($distributorPharmacyDesignation)
+    {
+        $this->distributorPharmacyDesignation = $distributorPharmacyDesignation;
+    }
+}
+$dpd1 = new DistributorPharmacyDesignation;
+$dpd1 -> setDistributorPharmacyDesignation('Нск, Красный пр-кт 1');
+echo $dpd1->getDistributorPharmacyDesignation();
+
+$dpd2 = new DistributorPharmacyDesignation;
+$dpd2 -> setDistributorPharmacyDesignation('Новосибирск,Ленина 5');
+echo $dpd2->getDistributorPharmacyDesignation();
+
+
+
+class ListPharmacyDesignation
+{
+    private $relations = Array();
+
+    //добавление новой привязки обозначения дистр-ра к аптеке Renewal
+    public function addRelation (DistributorPharmacyDesignation $distributorPharmacyDesignation, PharmacyDesignation $pharmacyDesignation){
+        $key = $distributorPharmacyDesignation -> getDistributorPharmacyDesignation();
+        $value = $pharmacyDesignation;
+
+        $this->relations += [$key => $value];
+    }
+
+    //проверка наличия обозначения дистрибьютора среди привязок к аптеке Renewal
+    public function validationDesignation (DistributorPharmacyDesignation $distributorPharmacyDesignation){
+        $pharmacyDesignation = $distributorPharmacyDesignation -> getDistributorPharmacyDesignation();
+        return isset($this->relations[$pharmacyDesignation]);
+    }
+
+    //получение названия товара Renewal на основе обозначения дистрибьютора
+    public function redefineDesignation (DistributorPharmacyDesignation $distributorPharmacyDesignation){
+        try {
+            if ($this->relations [$distributorPharmacyDesignation -> getDistributorPharmacyDesignation()])
+            {return $this->relations [$distributorPharmacyDesignation-> getDistributorPharmacyDesignation()];}
+            else
+            {throw new Exception('Обозначение аптеки дистрибьютора не определено');}
+        }
+        catch (Exception $ex){
+            echo $ex ->getMessage();
+        }
+    }
+}
+
+$lp= new ListPharmacyDesignation;
+$lp ->addRelation($dpd1, $p1);
+$lp ->addRelation($dpd2, $p2);
+
+echo $lp->validationDesignation($dpd1);
+echo ($lp->redefineDesignation($dpd1)) -> getPharmacyDesignation();
+
+
+
+class Count
+{
+    private $count;
+
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    public function setCount($count)
+    {
+        if ($count>0) {$this->count = $count;}
+        else {echo 'Операция не выполнена.Значение должно быть больше нуля';}
+    }
+}
+
+$c1 = new Count;
+$c1 -> setCount('7');
+echo $c1->getCount();
+
+$c2 = new Count;
+$c2 -> setCount('15');
+echo $c2->getCount();
+
+
+class SaleStatus
+{
+    private $status = FALSE;
+
+    public function isStatus()
+    {
+        return $this->status;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+}
+
+
+class Sale
+{
+    private $saleStatus = FALSE;
+    private $distributor;
+    private $itemDesignation;
+    private $pharmacyDesignation;
+    private $count;
+
+
+    public function getSaleStatus()
+    {
+        return $this->saleStatus;
+    }
+
+
+    public function setSaleStatus($saleStatus)
+    {
+        $this->saleStatus = $saleStatus;
+    }
+
+
+
+    public function getDistributor()
+    {
+        return $this -> distributor;
+    }
+
+    public function setDistributor (Distributor $distributor)
+    {
+        $this-> distributor = $distributor;
+    }
+
+    public function getItemDesignation()
+    {
+        return $this -> itemDesignation;
+    }
+
+    public function setItemDesignation (Item $itemDesignation)
+    {
+        $this-> itemDesignation = $itemDesignation;
+    }
+
+    public function getPharmacyDesignation()
+    {
+        return $this->pharmacyDesignation;
+    }
+
+    public function setPharmacyDesignation(PharmacyDesignation $pharmacyDesignation)
+    {
+        $this->pharmacyDesignation = $pharmacyDesignation;
+    }
+
+    public function getCount()
+    {
+        return $this -> count;
+    }
+
+    public function setCount(Count $count)
+    {
+        $this->count = $count;
+    }
+}
+
+
+
+class SaleReceived extends Sale
+{
+    private $id;
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    public function setId()
+    {
+        $this->id = uniqid();
+    }
+
+
+    //проверка наличия названия товара дистрибьютора в списках
+    public function validationItem(ListItemDesignation $listItemDesignation){
+        return $listItemDesignation->validationDesignation($this->getItemDesignation());
+    }
+
+    //проверка наличия названия аптеки дистрибьютора в списках Renewal
+    public function validationPharmacy(ListPharmacyDesignation $listPharmacyDesignation){
+        return $listPharmacyDesignation->validationDesignation($this->getPharmacyDesignation());
+    }
+
+    //замена названия товара дистрибьютора на название Renewal
+    public function redefineItemDesignation(ListItemDesignation $listItemDesignation){
+        $itemDesignation = $listItemDesignation->redefineDesignation($this->getItemDesignation());
+        $this->setItemDesignation( $itemDesignation);
+    }
+
+    //замена названия аптеки дистрибьютора на название Renewal
+    public function redefinePharmacyDesignation(ListPharmacyDesignation $listPharmacyDesignation){
+        $pharmacyDesignation = $listPharmacyDesignation->redefineDesignation($this->getPharmacyDesignation());
+        $this->setPharmacyDesignation($pharmacyDesignation);
+    }
+
+    //проверка наличия всех привязок (товар и аптека)дистрибьютора к обозначениям Renewal
+    public function checkCorrected(ListItemDesignation $listItemDesignation,
+                                   ListPharmacyDesignation $listPharmacyDesignation){
+        if (($this->validationItem($listItemDesignation)) &&
+            ($this->validationPharmacy($listPharmacyDesignation))) {
+            $this->setSaleStatus(TRUE);
+        } else {
+            $this->setSaleStatus(FALSE);
+        }
+    }
+
+    //Добавление отсутствующей связи по обозначению товара дистрибьютором и системой
+    public function addItemRelation(Item $item,
+                                    ListItemDesignation $listItemDesignation){
+        $listItemDesignation -> addRelation($this-> getItemDesignation(),$item);
+    }
+
+    //Добавление отсутствующей связи по обозначению аптеки дистрибьютором и системой
+    public function addPharmacyRelation(PharmacyDesignation $pharmacyDesignation,
+                                        ListPharmacyDesignation $listPharmacyDesignation){
+        $listPharmacyDesignation -> addRelation($this-> getPharmacyDesignation(),$pharmacyDesignation);
+    }
+
+
+    //cоздание продажи с корректным нименованием товара и аптеки
+    public function createSaleCorrected (ListItemDesignation $listItemDesignation,
+                                         ListPharmacyDesignation $listPharmacyDesignation){
+        if ($this->getSaleStatus() == TRUE) {
+
+            $this->redefineItemDesignation($listItemDesignation);
+            $this->redefinePharmacyDesignation($listPharmacyDesignation);
+
+
+            $distributor = $this->getDistributor();
+            $item = $this->getItemDesignation();
+            $pharmacyDesignation = $this->getPharmacyDesignation();
+            $count = $this->getCount();
+
+            $saleCorrected = Array ($distributor, $item, $pharmacyDesignation, $count);
+
+            return $saleCorrected;
+
+        }
+        else {
+            echo 'Не все привязки присутствуют в системе';
+        }
+
+    }
+}
+
+$sale1 = new SaleReceived();
+$sale1 ->setDistributor($d1) ;
+$sale1 ->setItemDesignation($did1) ;
+$sale1 ->setPharmacyDesignation($dpd1) ;
+$sale1 ->setCount($c1) ;
+
+echo $sale1 ->getItemDesignation()->getDistributorItemDesignation();
+echo $sale1 ->getPharmacyDesignation()->getDistributorPharmacyDesignation();
+echo $sale1 ->getCount()->getCount() ;
+
+echo $sale1 ->validationItem($li);
+$sale1->redefineItemDesignation($li);
+echo $sale1 ->getItemDesignation()-> getItem();
+
+$sale1->redefinePharmacyDesignation($lp);
+echo $sale1 ->getPharmacyDesignation() ->getPharmacyDesignation();
+
+
+
+$sale1 = new SaleReceived();
+$sale1 ->setDistributor($d1) ;
+$sale1 ->setItemDesignation($did1) ;
+$sale1 ->setPharmacyDesignation($dpd1) ;
+$sale1 ->setCount($c1) ;
+
+$sale9999 = new SaleReceived();
+$did9999 = new DistributorItemDesignation;
+$did9999 -> setDistributorItemDesignation('девять девять девять девять');
+
+$sale1 ->setDistributor($d1) ;
+$sale1 ->setItemDesignation($did9999) ;
+$sale1 ->setPharmacyDesignation($dpd1) ;
+$sale1 ->setCount($c1) ;
+
+echo $sale1->checkCorrected($li, $lp);
+
+$sale1->addItemRelation($li, $i1);
+
+
+*/
+
+// Загруженные пользователем значение продаж для последующей обработки
+class SaleReceived extends Sale
+{
+    private $id;
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    public function setId()
+    {
+        $this->id = uniqid();
+    }
+
+
+    //проверка наличия названия товара дистрибьютора в списках
+    public function validationItem(ListItemDesignation $listItemDesignation){
+        return $listItemDesignation->validationDesignation($this->getItemDesignation());
+    }
+
+    //проверка наличия названия аптеки дистрибьютора в списках Renewal
+    public function validationPharmacy(ListPharmacyDesignation $listPharmacyDesignation){
+        return $listPharmacyDesignation->validationDesignation($this->getPharmacyDesignation());
+    }
+
+    //замена названия товара дистрибьютора на название Renewal
+    public function redefineItemDesignation(ListItemDesignation $listItemDesignation){
+        $itemDesignation = $listItemDesignation->redefineDesignation($this->getItemDesignation());
+        $this->setItemDesignation( $itemDesignation);
+    }
+
+    //замена названия аптеки дистрибьютора на название Renewal
+    public function redefinePharmacyDesignation(ListPharmacyDesignation $listPharmacyDesignation){
+        $pharmacyDesignation = $listPharmacyDesignation->redefineDesignation($this->getPharmacyDesignation());
+        $this->setPharmacyDesignation($pharmacyDesignation);
+    }
+
+    //проверка наличия всех привязок (товар и аптека)дистрибьютора к обозначениям Renewal
+    public function checkCorrected(ListItemDesignation $listItemDesignation,
+                                   ListPharmacyDesignation $listPharmacyDesignation){
+        if (($this->validationItem($listItemDesignation)) &&
+            ($this->validationPharmacy($listPharmacyDesignation))) {
+            $this->setSaleStatus(TRUE);
+        } else {
+            $this->setSaleStatus(FALSE);
+        }
+    }
+
+//    //Добавление отсутствующей связи по обозначению товара дистрибьютором и системой
+//    public function addItemRelation(Item $item,
+//                                    ListItemDesignation $listItemDesignation){
+//        $listItemDesignation -> addRelation($this-> getItemDesignation(),$item);
+//    }
+//
+//    //Добавление отсутствующей связи по обозначению аптеки дистрибьютором и системой
+//    public function addPharmacyRelation(PharmacyDesignation $pharmacyDesignation,
+//                                        ListPharmacyDesignation $listPharmacyDesignation){
+//        $listPharmacyDesignation -> addRelation($this-> getPharmacyDesignation(),$pharmacyDesignation);
+//    }
+
+
+    //cоздание продажи с корректным нименованием товара и аптеки
+    public function createSaleCorrected (ListItemDesignation $listItemDesignation,
+                                         ListPharmacyDesignation $listPharmacyDesignation){
+        if ($this->getSaleStatus() == TRUE) {
+
+            $this->redefineItemDesignation($listItemDesignation);
+            $this->redefinePharmacyDesignation($listPharmacyDesignation);
+
+
+            $distributor = $this->getDistributor();
+            $item = $this->getItemDesignation();
+            $pharmacyDesignation = $this->getPharmacyDesignation();
+            $count = $this->getCount();
+
+            $saleCorrected = Array ($distributor, $item, $pharmacyDesignation, $count);
+
+            return $saleCorrected;
+
+        }
+        else {
+            echo 'Не все привязки присутствуют в системе';
+        }
+
+    }
+}
