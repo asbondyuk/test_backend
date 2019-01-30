@@ -1,0 +1,46 @@
+<?php
+
+
+/*
+$pharm = new Pharmacy ;
+
+$pharm ->addSale($saleCorrected1);
+$pharm ->addSale($d1, $saleCorrected2);
+
+echo $pharm ->showSales();
+echo $pharm ->showSalesByDistributors();
+*/
+
+
+class Pharmacy extends PharmacyDesignation
+{
+    private $sales = Array();
+
+    //добавление продажи: если есть дистрибьютор в списке - увеличить значение, иначе - завеси новый элемент массива
+    public function addSale(SaleCorrected $saleCorrected){
+        $key = ($saleCorrected->getDistributor() ->getName());
+
+        $value = $saleCorrected -> getCount() -> getCount();
+
+        if (array_key_exists($key, $this->sales)) {
+            $this -> sales[$key] += ($value);
+        }
+        else
+        {$this->sales += [$key => $value];}
+    }
+
+    //вывод продаж по дистрибьюторам
+    public function showSalesByDistributors(){
+        print_r($this->sales);
+    }
+
+
+    // вывод общего числа проданного
+    public function showSales (){
+        $sum = 0;
+
+        foreach (array_values($this->sales) as $element)
+            $sum +=$element;
+        return $sum;
+    }
+}
