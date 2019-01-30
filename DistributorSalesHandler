@@ -1,0 +1,36 @@
+<?php
+
+// парсинг загруженного диистрибьютором файла
+class DistributorSalesHandler
+{
+    private $distributor;
+    public function createSalesReceive($file){
+
+        $lines = file($file);
+
+        foreach ($lines as $line) {
+             $explodedLine = explode(' ', $line);
+             $item;
+             
+             
+             create new DistributorItemDesignation;
+             create new DistributorPharmacyDesignation;
+             create new Count;
+             
+
+
+        }
+    }
+
+    public function getDistributor()
+    {
+        return $this->distributor;
+    }
+
+    public function setDistributor($distributor)
+    {
+        $this->distributor = $distributor;
+    }
+
+
+}
