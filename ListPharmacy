@@ -1,0 +1,68 @@
+<?php
+
+/*
+$lpu = new ListPharmacy;
+
+$lpu ->addPharmacy($pharm1);
+$lpu ->addPharmacy($pharm2);
+
+$lpu->showPharmacies();
+
+echo ($lpu->findPharmacy('Ленина 1')) -> getPharmacyDesignation();
+($lpu->findPharmacy('Ленина 1'))->showSales();
+
+$lpu ->checkPharmacyInList($pharm1-> getPharmacyDesignation());
+
+
+ */
+
+//Список аптек для вывода пользователю
+class ListPharmacy
+{
+    private $pharmacies = Array();
+
+    //добавление новой аптеки, с проверкой наличия у добавляемой обозначения,
+    // и последующей проверкой наличия аптеки в списке
+    public function addPharmacy (Pharmacy $pharmacy){
+        try {
+            if ($key = $pharmacy -> getPharmacyDesignation()){
+                $check = $this -> checkPharmacyInList($pharmacy-> getPharmacyDesignation());
+
+                if(!$check) {
+                    $key = $pharmacy->getPharmacyDesignation();
+                    $value = $pharmacy;
+
+                    $this->pharmacies += [$key => $value];
+                }
+                else
+                    { echo 'Данная аптека уже в списке';}
+
+            }
+            else {
+                throw new Exception('Для добавления аптеки в список необходимо указать обозначение аптеки');
+            }
+        }
+        catch (Exception $ex){
+            echo $ex ->getMessage();
+        }
+    }
+
+
+    //проверка наличия аптеки в списке аптек
+    public function checkPharmacyInList ($pharmacy){
+        echo array_key_exists($pharmacy, $this->pharmacies);
+        return array_key_exists($pharmacy, $this->pharmacies);
+    }
+
+
+    //Отображение всего списка аптек (по обозначениям)
+    public function showPharmacies(){
+        print_r(array_keys($this->pharmacies));
+    }
+
+
+    //выбор аптеки из списка на основе ее обозначения
+    public function findPharmacy ($pharmacyDesignation){
+            return $this->pharmacies [$pharmacyDesignation];
+    }
+}
