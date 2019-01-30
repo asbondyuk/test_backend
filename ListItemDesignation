@@ -1,0 +1,43 @@
+<?php
+
+/*
+$li= new ListItemDesignation;
+$li ->addRelation($did1, $i1);
+$li ->addRelation($did2, $i2);
+
+echo $li->validationDesignation($did2);
+echo ($li->redefineDesignation($did2))->getItem();
+*/
+
+//Список привязок обозначений товара дистрибьютора к товару Renewal
+class ListItemDesignation
+{
+    private $relations = Array();
+
+    //добавление новой привязки обозначения дистр-ра к товару Renewal
+    public function addRelation (DistributorItemDesignation $distributorItemDesignation, Item $item){
+        $key = $distributorItemDesignation -> getDistributorItemDesignation();
+        $value = $item;
+
+        $this->relations += [$key => $value];
+    }
+
+    //проверка наличия обозначения дистрибьютора среди привязок к товару Renewal
+    public function validationDesignation (DistributorItemDesignation $distributorItemDesignation){
+        $itemDesignation = $distributorItemDesignation -> getDistributorItemDesignation();
+        return isset($this->relations[$itemDesignation]);
+    }
+
+    //получение названия товара Renewal на основе обозначения дистрибьютора
+    public function redefineDesignation (DistributorItemDesignation $distributorItemDesignation){
+        try {
+            if ($this->relations [$distributorItemDesignation -> getDistributorItemDesignation()])
+            {return $this->relations [$distributorItemDesignation-> getDistributorItemDesignation()];}
+            else
+            {throw new Exception('Обозначение товара дистрибьютора не определено');}
+        }
+        catch (Exception $ex){
+            echo $ex ->getMessage();
+        }
+    }
+}
