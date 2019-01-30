@@ -1,0 +1,27 @@
+<?php
+
+/*
+$p1 = new PharmacyDesignation;
+$p1 -> setPharmacyDesignation('Новосибирск, Красный проспект 1');
+echo $p1->getPharmacyDesignation();
+
+$p2 = new PharmacyDesignation;
+$p2 -> setPharmacyDesignation('Новосибирск, Ленина 1');
+echo $p2->getPharmacyDesignation();
+*/
+
+//Обозначение аптеки в системе Renewal
+class PharmacyDesignation
+{
+    private $pharmacyDesignation;
+
+    public function getPharmacyDesignation()
+    {
+        return $this->pharmacyDesignation;
+    }
+
+    public function setPharmacyDesignation($pharmacyDesignation)
+    {
+        $this->pharmacyDesignation = $pharmacyDesignation;
+    }
+}
