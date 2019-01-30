@@ -1,0 +1,27 @@
+<?php
+
+/*
+$dpd1 = new DistributorPharmacyDesignation;
+$dpd1 -> setDistributorPharmacyDesignation('Нск, Красный пр-кт 1');
+echo $dpd1->getDistributorPharmacyDesignation();
+
+$dpd2 = new DistributorPharmacyDesignation;
+$dpd2 -> setDistributorPharmacyDesignation('Новосибирск,Ленина 5');
+echo $dpd2->getDistributorPharmacyDesignation();
+*/
+
+//Обозначение аптеки у дистрибьютора
+class DistributorPharmacyDesignation extends PharmacyDesignation
+{
+    private $distributorPharmacyDesignation;
+
+    public function getDistributorPharmacyDesignation()
+    {
+        return $this->distributorPharmacyDesignation;
+    }
+
+    public function setDistributorPharmacyDesignation($distributorPharmacyDesignation)
+    {
+        $this->distributorPharmacyDesignation = $distributorPharmacyDesignation;
+    }
+}
