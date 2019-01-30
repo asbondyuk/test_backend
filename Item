@@ -1,0 +1,27 @@
+<?php
+
+/*
+$i1 = new Item;
+$i1 -> setItem('11');
+echo $i1->getItem();
+
+$i2 = new Item;
+$i2 -> setItem('22');
+echo $i2->getItem();
+*/
+
+//Товар из системы Renewal
+class Item
+{
+    private $item;
+
+    public function getItem()
+    {
+        return $this->item;
+    }
+
+    public function setItem($item)
+    {
+        $this->item = $item;
+    }
+}
