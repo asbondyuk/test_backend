@@ -1,0 +1,91 @@
+<?php
+
+/*
+$sale1 = new Sale;
+
+
+
+$sale1 -> setSaleStatus(TRUE);
+echo $sale1 -> getSaleStatus -> isStatus();
+
+
+$sale1 -> setItemDesignation($did1);
+echo $sale1 -> getItemDesignation()->getDistributorItemDesignation();
+
+$sale1 -> setPharmacyDesignation($dpd1);
+echo $sale1 -> getPharmacyDesignation() -> getDistributorPharmacyDesignation();
+
+$sale1 -> setCount($c1);
+echo $sale1 -> getCount() -> getCount();
+
+
+$sale1 -> setItemDesignation($i1);
+echo $sale1 -> getItemDesignation()->getItem();
+
+$sale1 -> setPharmacyDesignation($p1);
+echo $sale1 -> getPharmacyDesignation() -> getPharmacyDesignation();
+*/
+
+//базовый класс продажи, содержащий в себе основные данные продаж
+class Sale
+{
+    private $saleStatus = FALSE;
+    private $distributor;
+    private $itemDesignation;
+    private $pharmacyDesignation;
+    private $count;
+
+
+    public function getSaleStatus()
+    {
+        return $this->saleStatus;
+    }
+
+
+    public function setSaleStatus($saleStatus)
+    {
+        $this->saleStatus = $saleStatus;
+    }
+
+
+
+    public function getDistributor()
+    {
+        return $this -> distributor;
+    }
+
+    public function setDistributor (Distributor $distributor)
+    {
+        $this-> distributor = $distributor;
+    }
+
+    public function getItemDesignation()
+    {
+        return $this -> itemDesignation;
+    }
+
+    public function setItemDesignation (Item $itemDesignation)
+    {
+        $this-> itemDesignation = $itemDesignation;
+    }
+
+    public function getPharmacyDesignation()
+    {
+        return $this->pharmacyDesignation;
+    }
+
+    public function setPharmacyDesignation(PharmacyDesignation $pharmacyDesignation)
+    {
+        $this->pharmacyDesignation = $pharmacyDesignation;
+    }
+
+    public function getCount()
+    {
+        return $this -> count;
+    }
+
+    public function setCount(Count $count)
+    {
+        $this->count = $count;
+    }
+}
