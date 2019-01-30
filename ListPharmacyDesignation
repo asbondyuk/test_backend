@@ -1,0 +1,43 @@
+<?php
+
+/*
+$lp= new ListPharmacyDesignation;
+$lp ->addRelation($dpd1, $p1);
+$lp ->addRelation($dpd2, $p2);
+
+echo $lp->validationDesignation($dpd1);
+echo ($lp->redefineDesignation($dpd1)) -> getPharmacyDesignation();
+*/
+
+//Список привязок обозначений аптеки дистрибьютора к аптеке Renewal
+class ListPharmacyDesignation
+{
+    private $relations = Array();
+
+    //добавление новой привязки обозначения дистр-ра к аптеке Renewal
+    public function addRelation (DistributorPharmacyDesignation $distributorPharmacyDesignation, PharmacyDesignation $pharmacyDesignation){
+        $key = $distributorPharmacyDesignation -> getDistributorPharmacyDesignation();
+        $value = $pharmacyDesignation;
+
+        $this->relations += [$key => $value];
+    }
+
+    //проверка наличия обозначения дистрибьютора среди привязок к аптеке Renewal
+    public function validationDesignation (DistributorPharmacyDesignation $distributorPharmacyDesignation){
+        $pharmacyDesignation = $distributorPharmacyDesignation -> getDistributorPharmacyDesignation();
+        return isset($this->relations[$pharmacyDesignation]);
+    }
+
+    //получение названия товара Renewal на основе обозначения дистрибьютора
+    public function redefineDesignation (DistributorPharmacyDesignation $distributorPharmacyDesignation){
+        try {
+            if ($this->relations [$distributorPharmacyDesignation -> getDistributorPharmacyDesignation()])
+            {return $this->relations [$distributorPharmacyDesignation-> getDistributorPharmacyDesignation()];}
+            else
+            {throw new Exception('Обозначение аптеки дистрибьютора не определено');}
+        }
+        catch (Exception $ex){
+            echo $ex ->getMessage();
+        }
+    }
+}
