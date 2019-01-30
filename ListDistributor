@@ -1,0 +1,90 @@
+<?php
+
+/*
+class Distributor
+{
+    private $name;
+
+    public function getName()
+    {
+        return $this->name;
+    }
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+}
+
+$d1 = new Distributor;
+$d1 ->setName('д1');
+echo $d1 ->getName();
+
+$d2 = new Distributor;
+$d2 ->setName('д2');
+echo $d2 ->getName();
+
+
+
+$ld= new ListDistributor;
+
+$ld ->addDistributor($d1);
+$ld ->addDistributor($d2);
+
+$ld->showDistributors();
+echo ($ld->findDistributor('д1')) -> getName();
+$ld ->checkDistributorInList($d1-> getName());
+*/
+
+
+
+
+//cписок дистрибьюторов
+class ListDistributor
+{
+    private $distributors = Array();
+
+    //добавление нового дистрибьютора, с проверкой наличия у добавляемой названия,
+    // и последующей проверкой наличия дистрибьютора в списке
+    public function addDistributor (Distributor $distributor){
+        try {
+            if ($key = $distributor -> getName()){
+                $check = $this -> checkDistributorInList($distributor-> getName());
+
+                if(!$check) {
+                    $key = $distributor->getName();
+                    $value = $distributor;
+
+                    $this -> distributors += [$key => $value];
+                }
+                else
+                { echo 'Данный дистрибьютор уже в списке';}
+
+            }
+            else {
+                throw new Exception('Для добавления дистрибьютора в список необходимо указать название дистрибьютора');
+            }
+        }
+        catch (Exception $ex){
+            echo $ex ->getMessage();
+        }
+    }
+
+
+    //проверка наличия дистрибьютора в списке дистрибьюторов
+    public function checkDistributorInList ($distributor){
+        echo array_key_exists($distributor, $this->distributors);
+        return array_key_exists($distributor, $this->distributors);
+    }
+
+
+    //Отображение всего списка аптек (по обозначениям)
+    public function showDistributors(){
+        print_r(array_keys($this->distributors));
+    }
+
+
+    //выбор дистрибьютора из списка на основе ее обозначения
+    public function findDistributor ($distributor){
+        return $this -> distributors [$distributor];
+    }
+}
