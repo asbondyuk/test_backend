@@ -1,15 +1,3 @@
-<?php
-
-/*
-    $c1 = new Count;
-    $c1 -> setCount('7');
-    echo $c1->getCount();
-
-    $c2 = new Count;
-    $c2 -> setCount('15');
-    echo $c2->getCount();
-    */
-
 //Количество проданного товара дистрибьютором
 class Count
 {
